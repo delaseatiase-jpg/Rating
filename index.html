@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Final Rating</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #0f1115;
+        color: white;
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    .wrapper {
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 42px;
+        margin-bottom: 35px;
+        letter-spacing: 2px;
+    }
+
+    .layout {
+        display: grid;
+        grid-template-columns: 350px 1fr;
+        gap: 25px;
+    }
+
+    .card {
+        background: #181b22;
+        border: 1px solid #292d36;
+        border-radius: 16px;
+        padding: 25px;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 7px;
+        color: #c7cbd4;
+    }
+
+    select, input {
+        width: 100%;
+        padding: 13px;
+        border-radius: 9px;
+        border: 1px solid #343944;
+        background: #101218;
+        color: white;
+        font-size: 16px;
+    }
+
+    select:focus, input:focus {
+        outline: none;
+        border-color: #6c7cff;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 22px;
+        padding: 14px;
+        border: none;
+        border-radius: 9px;
+        background: #5865f2;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #4752c4;
+    }
+
+    button:disabled {
+        background: #3a3f4d;
+        cursor: not-allowed;
+    }
+
+    .leaderboard-header {
+        display: grid;
+        grid-template-columns: 60px 1fr 100px;
+        padding: 12px;
+        color: #8e95a3;
+        font-size: 13px;
+        border-bottom: 1px solid #292d36;
+    }
+
+    .employee {
+        display: grid;
+        grid-template-columns: 60px 1fr 100px;
+        align-items: center;
+        padding: 17px 12px;
+        border-bottom: 1px solid #292d36;
+    }
+
+    .employee:last-child {
+        border-bottom: none;
+    }
+
+    .rank {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .name {
+        font-weight: bold;
+    }
+
+    .score {
+        text-align: right;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .empty {
+        text-align: center;
+        color: #777e8c;
+        padding: 40px 10px;
+    }
+
+    .result {
+        margin-top: 20px;
+        padding: 15px;
+        background: #101218;
+        border-radius: 10px;
+        display: none;
+    }
+
+    .result strong {
+        font-size: 22px;
+    }
+
+    @media (max-width: 750px) {
+        .layout {
+            grid-template-columns: 1fr;
+        }
+
+        h1 {
+            font-size: 32px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <h1>FINAL RATING</h1>
+
+    <div class="layout">
+
+        <!-- RATING FORM -->
+        <div class="card">
+
+            <h2>Rate Person</h2>
+
+            <form id="ratingForm">
+
+                <label for="nameSelect">Select Person</label>
+                <select id="nameSelect" required>
+                    <option value="" disabled selected>-- Choose Name --</option>
+                    <option value="Vanessa">Vanessa</option>
+                    <option value="Eveata">Eveata</option>
+                    <option value="Stephanie">Stephanie</option>
+                    <option value="Samantha">Samantha</option>
+                    <option value="Nicole">Nicole</option>
+                    <option value="Afua">Afua</option>
+                    <option value="Camille">Camille</option>
+                    <option value="Gabriella">Gabriella</option>
+                    <option value="Big m">Big m</option>
+                    <option value="Raheem's">Raheem's</option>
+                    <option value="Janelle">Janelle</option>
+                    <option value="Petra">Petra</option>
+                    <option value="Eno">Eno</option>
+                    <option value="Benedict's">Benedict's</option>
+                    <option value="Elsa">Elsa</option>
+                    <option value="Judith">Judith</option>
+                    <option value="Amy">Amy</option>
+                    <option value="Chelsea">Chelsea</option>
+                    <option value="Hanan">Hanan</option>
+                    <option value="Pearl">Pearl</option>
+                    <option value="Carissa">Carissa</option>
+                    <option value="Jessica">Jessica</option>
+                </select>
+
+                <label for="faceCard">Face Card (1–10)</label>
+                <input
+                    type="number"
+                    id="faceCard"
+                    min="1"
+                    max="10"
+                    step="0.1"
+                    placeholder="1 to 10"
+                    required
+                >
+
+                <label for="yams">Yams (1–10)</label>
+                <input
+                    type="number"
+                    id="yams"
+                    min="1"
+                    max="10"
+                    step="0.1"
+                    placeholder="1 to 10"
+                    required
+                >
+
+                <button type="submit" id="submitBtn">
+                    Submit Rating
+                </button>
+
+            </form>
+
+            <div class="result" id="result"></div>
+
+        </div>
+
+
+        <!-- LEADERBOARD -->
+        <div class="card">
+
+            <h2>Leaderboard</h2>
+
+            <div class="leaderboard-header">
+                <span>RANK</span>
+                <span>NAME</span>
+                <span style="text-align:right;">RATING</span>
+            </div>
+
+            <div id="leaderboard">
+                <div class="empty">
+                    Loading live rankings...
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+// Open cloud KV storage bin for shared ratings
+const BIN_ID = "final_rating_global_store_v1";
+const SYNC_URL = `https://kv.valtown.stream/${BIN_ID}`;
+
+let rawRatings = [];
+
+// Fetch ratings on page load
+fetchRatings();
+
+// Auto-refresh leaderboard every 3 seconds across all devices
+setInterval(fetchRatings, 3000);
+
+async function fetchRatings() {
+    try {
+        const res = await fetch(SYNC_URL);
+        if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data)) {
+                rawRatings = data;
+                renderLeaderboard();
+            }
+        }
+    } catch (e) {
+        renderLeaderboard();
+    }
+}
+
+document.getElementById("ratingForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("nameSelect").value;
+    const faceCard = Number(document.getElementById("faceCard").value);
+    const yams = Number(document.getElementById("yams").value);
+
+    if (!name || faceCard < 1 || faceCard > 10 || yams < 1 || yams > 10) {
+        alert("Please enter valid ratings from 1 to 10.");
+        return;
+    }
+
+    const average = (faceCard + yams) / 2;
+    const submitBtn = document.getElementById("submitBtn");
+
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Submitting...";
+
+    // First fetch fresh list to append to
+    try {
+        const checkRes = await fetch(SYNC_URL);
+        if (checkRes.ok) {
+            const latest = await checkRes.json();
+            if (Array.isArray(latest)) rawRatings = latest;
+        }
+    } catch(e){}
+
+    const newRating = { name, faceCard, yams, timestamp: Date.now() };
+    rawRatings.push(newRating);
+
+    // Save back to cloud database
+    try {
+        await fetch(SYNC_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(rawRatings)
+        });
+    } catch (e) {
+        alert("Network error. Please try again.");
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Submit Rating";
+        
+        document.getElementById("result").style.display = "block";
+        document.getElementById("result").innerHTML = `
+            <strong>${escapeHTML(name)}</strong><br>
+            Final Rating: ${average.toFixed(1)} / 10
+        `;
+        
+        document.getElementById("ratingForm").reset();
+        renderLeaderboard();
+    }
+});
+
+function renderLeaderboard() {
+    const leaderboard = document.getElementById("leaderboard");
+    
+    if (!rawRatings || rawRatings.length === 0) {
+        leaderboard.innerHTML = `
+            <div class="empty">
+                No ratings yet. Be the first to submit!
+            </div>
+        `;
+        return;
+    }
+
+    // Group ratings by exact name
+    const grouped = {};
+    rawRatings.forEach(entry => {
+        const key = entry.name.toLowerCase();
+        if (!grouped[key]) {
+            grouped[key] = { name: entry.name, ratings: [] };
+        }
+        grouped[key].ratings.push(entry);
+    });
+
+    const list = Object.values(grouped).map(item => {
+        let total = 0;
+        item.ratings.forEach(r => total += (r.faceCard + r.yams) / 2);
+        return {
+            name: item.name,
+            count: item.ratings.length,
+            average: total / item.ratings.length
+        };
+    });
+
+    // Sort by highest rating score
+    list.sort((a, b) => b.average - a.average);
+
+    leaderboard.innerHTML = "";
+    list.forEach((person, index) => {
+        let medal = index + 1;
+        if (index === 0) medal = "🥇";
+        if (index === 1) medal = "🥈";
+        if (index === 2) medal = "🥉";
+
+        const row = document.createElement("div");
+        row.className = "employee";
+        row.innerHTML = `
+            <div class="rank">${medal}</div>
+            <div>
+                <div class="name">${escapeHTML(person.name)}</div>
+                <small style="color:#777e8c;">
+                    ${person.count} rating${person.count === 1 ? "" : "s"}
+                </small>
+            </div>
+            <div class="score">${person.average.toFixed(1)}</div>
+        `;
+        leaderboard.appendChild(row);
+    });
+}
+
+function escapeHTML(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+}
+</script>
+
+</body>
+</html>
